@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Engine.ViewModels;
 
 namespace MyGame
 {
@@ -20,9 +21,25 @@ namespace MyGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GameSession _gameSession;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _gameSession = new GameSession();
+
+            DataContext = _gameSession;
+        }
+
+        /// <summary>
+        /// 增加经验值事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddExperiencePoints_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSession.CurrentPlayer.ExperiencePoints += 10;
         }
     }
 }
