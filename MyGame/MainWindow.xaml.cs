@@ -33,13 +33,43 @@ namespace MyGame
         }
 
         /// <summary>
-        /// 增加经验值事件
+        /// 向北移动
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddExperiencePoints_Click(object sender, RoutedEventArgs e)
+        private void MoveNorth_Click(object sender, RoutedEventArgs e)
         {
-            _gameSession.CurrentPlayer.ExperiencePoints += 10;
+            _gameSession.MoveNorth();
+        }
+
+        /// <summary>
+        /// 向南移动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MoveSouth_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSession.MoveSouth();
+        }
+
+        /// <summary>
+        /// 向东移动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MoveEast_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSession.MoveEast();
+        }
+
+        /// <summary>
+        /// 向西移动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MoveWest_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSession.MoveWest();
         }
     }
 }

@@ -1,18 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Engine.Models
 {
    public class World
    {
+        //位置信息集合
        private List<Location> _locations = new List<Location>();
 
-       internal void AddLocation(Location location)
+        /// <summary>
+        /// 添加位置信息
+        /// </summary>
+       internal void AddLocation(int xCoordinate, int yCoordinate, string name, string description, string imageName)
+        {
+            Location loc = new Location();
+            loc.XCoordinate = xCoordinate;
+            loc.YCoordinate = yCoordinate;
+            loc.Name = name;
+            loc.Description = description;
+            loc.ImageName = imageName;
+
+            _locations.Add(loc);
+       }
+
+        /// <summary>
+        /// 根据坐标获取位置
+        /// </summary>
+        /// <param name="x">x坐标</param>
+        /// <param name="y">y坐标</param>
+        /// <returns>位置信息</returns>
+       public Location LocationAt(int x, int y)
        {
-           _locations.Add(location);
+           foreach (var location in _locations)
+           {
+               if (location.XCoordinate==x&&location.YCoordinate==y)
+               {
+                   return location;
+               }
+           }
+
+           return null;
        }
    }
 }
