@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         FontSize="12pt"
         Title="My Game" Height="768" Width="1024">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -48,7 +51,7 @@
             <Label Grid.Row="4" Grid.Column="1" Content="{Binding CurrentPlayer.ExperiencePoints}"/>
             <Label Grid.Row="5" Grid.Column="0" Content="等级:"/>
             <Label Grid.Row="5" Grid.Column="1" Content="{Binding CurrentPlayer.Level}"/>
-            <Button Grid.Row="6" Grid.Column="1" Content="增加经验" Click="AddExperiencePoints_Click" ></Button>
+            
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1"  Background="Beige">
@@ -73,13 +76,78 @@
                     <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="{Binding CurrentLocation.Name}"/>
                     <Image Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="125" Width="125" Source="{Binding CurrentLocation.ImageName}"/>
                     <TextBlock Grid.Row="2" HorizontalAlignment="Center"
- Text="{Binding CurrentLocation.Description}"/>
+ Text="{Binding CurrentLocation.Description}" TextWrapping="Wrap"/>
                 </Grid>
             </Border>
 
         </Grid>
-        <Label Grid.Row="2" Grid.Column="0" Content="库存和任务" Background="BurlyWood"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="战斗移动控制" Background="Lavender"/>
+        <Grid Grid.Row="2" Grid.Column="0"
+              Background="BurlyWood">
+
+            <TabControl>
+                <TabItem Header="库存">
+                    <DataGrid ItemsSource="{Binding CurrentPlayer.Inventory}"
+                              AutoGenerateColumns="False"
+                              HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="描述"
+                                                Binding="{Binding Name}"
+                                                Width="*"/>
+                            <DataGridTextColumn Header="价格"
+                                                Binding="{Binding Price}"
+                                                Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="任务">
+                    <DataGrid ItemsSource="{Binding CurrentPlayer.Quests}"
+                              AutoGenerateColumns="False"
+                              HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="描述"
+                                                Binding="{Binding PlayerQuest.Name}"
+                                                Width="*"/>
+                            <DataGridTextColumn Header="已完成?"
+                                                Binding="{Binding IsCompleted}"
+                                                Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1"  Background="Lavender">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="255"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="North" Grid.Row="0" Grid.Column="1" Content="北" Height="25" Width="65" Margin="10" Click="MoveNorth_Click"  Visibility="{Binding HasLocationToNorth, Converter={StaticResource BooleanToVisibility}}"
+       />
+                <Button x:Name="West" Grid.Row="1" Grid.Column="0" Content="西" Height="25" Width="65" Margin="10" Click="MoveWest_Click"  Visibility="{Binding HasLocationToWest, Converter={StaticResource BooleanToVisibility}}"
+       />
+                <Button x:Name="East" Grid.Row="1" Grid.Column="2" Content="东" Height="25" Width="65" Margin="10" Click="MoveEast_Click"  Visibility="{Binding HasLocationToEast, Converter={StaticResource BooleanToVisibility}}"
+       />
+                <Button x:Name="South" Grid.Row="2" Grid.Column="1" Content="南" Height="25" Width="65" Margin="10" Click="MoveSouth_Click"  Visibility="{Binding HasLocationToSouth, Converter={StaticResource BooleanToVisibility}}"
+       />
+            </Grid>
+        </Grid>
 
     </Grid>
 </Window>

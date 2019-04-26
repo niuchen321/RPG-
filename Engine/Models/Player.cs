@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Engine.Models
     /// <summary>
     /// 玩家状态
     /// </summary>
-    public class Player : INotifyPropertyChanged
+    public class Player : BaseNotificationClass
     {
         private string _name;
         private string _characterClass;
@@ -28,7 +29,7 @@ namespace Engine.Models
             set
             {
                 _name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged(nameof(Name));
             }
         }
 
@@ -41,7 +42,7 @@ namespace Engine.Models
             set
             {
                 _characterClass = value;
-                OnPropertyChanged("CharacterClass");
+                OnPropertyChanged(nameof(CharacterClass));
             }
         }
 
@@ -54,7 +55,7 @@ namespace Engine.Models
             set
             {
                 _hitPoints = value;
-                OnPropertyChanged("HitPoints");
+                OnPropertyChanged(nameof(HitPoints));
             }
         }
         /// <summary>
@@ -66,7 +67,7 @@ namespace Engine.Models
             set
             {
                 _experiencePoints = value;
-                OnPropertyChanged("ExperiencePoints");
+                OnPropertyChanged(nameof(ExperiencePoints));
             }
         }
         /// <summary>
@@ -77,7 +78,7 @@ namespace Engine.Models
             get => _level; set
             {
                 _level = value;
-                OnPropertyChanged("Level");
+                OnPropertyChanged(nameof(Level));
             }
         }
         /// <summary>
@@ -88,19 +89,24 @@ namespace Engine.Models
             get => _gold; set
             {
                 _gold = value;
-                OnPropertyChanged("Gold");
+                OnPropertyChanged(nameof(Gold));
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// 游戏项集合
+        /// </summary>
+        public ObservableCollection<GameItem> Inventory { get; set; }
 
         /// <summary>
-        /// 属性修改事件
+        /// 任务状态集合
         /// </summary>
-        /// <param name="propertyName">属性名</param>
-        protected virtual void OnPropertyChanged(string propertyName)
+        public ObservableCollection<QuestStatus> Quests { get; set; }
+
+        public Player()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Inventory = new ObservableCollection<GameItem>();
+            Quests = new ObservableCollection<QuestStatus>();
         }
     }
 }
