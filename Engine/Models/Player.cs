@@ -5,34 +5,19 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Factories;
 
 namespace Engine.Models
 {
     /// <summary>
     /// 玩家状态
     /// </summary>
-    public class Player : BaseNotificationClass
+    public class Player : LivingEntity
     {
-        private string _name;
         private string _characterClass;
-        private int _hitPoints;
         private int _experiencePoints;
         private int _level;
-        private int _gold;
-
-        /// <summary>
-        /// 姓名
-        /// </summary>
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
-            }
-        }
-
+        
         /// <summary>
         /// 角色类型
         /// </summary>
@@ -46,18 +31,6 @@ namespace Engine.Models
             }
         }
 
-        /// <summary>
-        /// 生命值
-        /// </summary>
-        public int HitPoints
-        {
-            get => _hitPoints;
-            set
-            {
-                _hitPoints = value;
-                OnPropertyChanged(nameof(HitPoints));
-            }
-        }
         /// <summary>
         /// 经验值
         /// </summary>
@@ -81,32 +54,37 @@ namespace Engine.Models
                 OnPropertyChanged(nameof(Level));
             }
         }
-        /// <summary>
-        /// 金币
-        /// </summary>
-        public int Gold
-        {
-            get => _gold; set
-            {
-                _gold = value;
-                OnPropertyChanged(nameof(Gold));
-            }
-        }
-
-        /// <summary>
-        /// 游戏项集合
-        /// </summary>
-        public ObservableCollection<GameItem> Inventory { get; set; }
-
+        
         /// <summary>
         /// 任务状态集合
         /// </summary>
         public ObservableCollection<QuestStatus> Quests { get; set; }
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public Player()
         {
             Inventory = new ObservableCollection<GameItem>();
             Quests = new ObservableCollection<QuestStatus>();
+        }
+        
+        /// <summary>
+        /// 判断是否存在足够的物品
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public bool HasAllTheseItems(List<ItemQuantity> items)
+        {
+            foreach (ItemQuantity item in items)
+            {
+                if (Inventory.Count(i => i.ItemTypeId == item.ItemID) < item.Quantity)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

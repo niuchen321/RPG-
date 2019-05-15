@@ -11,7 +11,14 @@ namespace Engine.Factories
     /// </summary>
    public class ItemQuantity
     {
+        /// <summary>
+        /// 物品ID
+        /// </summary>
         public int ItemID { get; set; }
+
+        /// <summary>
+        /// 数量
+        /// </summary>
         public int Quantity { get; set; }
 
         public ItemQuantity(int itemID, int quantity)

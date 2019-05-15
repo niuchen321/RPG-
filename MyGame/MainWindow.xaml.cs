@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Engine.EventArgs;
 using Engine.ViewModels;
 
 namespace MyGame
@@ -21,13 +22,13 @@ namespace MyGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameSession _gameSession;
+        private readonly GameSession _gameSession = new GameSession();
 
         public MainWindow()
         {
             InitializeComponent();
-
-            _gameSession = new GameSession();
+            
+            _gameSession.OnMessageRaised += OnGameMessageRaised;
 
             DataContext = _gameSession;
         }
@@ -70,6 +71,40 @@ namespace MyGame
         private void MoveWest_Click(object sender, RoutedEventArgs e)
         {
             _gameSession.MoveWest();
+        }
+
+        /// <summary>
+        /// 攻击怪物
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClick_AttackMonster(object sender, RoutedEventArgs e)
+        {
+            _gameSession.AttackCurrentMonster();
+        }
+
+        /// <summary>
+        /// 游戏信息显示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnGameMessageRaised(object sender, GameMessageEventArgs e)
+        {
+            GameMessages.Document.Blocks.Add(new Paragraph(new Run(e.Message)));
+            GameMessages.ScrollToEnd();
+        }
+
+        /// <summary>
+        /// 打开交易窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClick_DisplayTradeScreen(object sender, RoutedEventArgs e)
+        {
+            TradeScreen tradeScreen = new TradeScreen();
+            tradeScreen.Owner = this;
+            tradeScreen.DataContext = _gameSession;
+            tradeScreen.ShowDialog();
         }
     }
 }

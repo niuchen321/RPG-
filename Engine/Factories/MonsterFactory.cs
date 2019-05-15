@@ -24,7 +24,7 @@ namespace Engine.Factories
             {
                 case 1:
                     Monster snake =
-                        new Monster("蛇", "Snake.png", 4, 4, 5, 1);
+                        new Monster("蛇", "Snake.png", 4, 4,1,2, 5, 1);
 
                     AddLootItem(snake, 9001, 25);
                     AddLootItem(snake, 9002, 75);
@@ -33,7 +33,7 @@ namespace Engine.Factories
 
                 case 2:
                     Monster rat =
-                        new Monster("老鼠", "Rat.png", 5, 5, 5, 1);
+                        new Monster("老鼠", "Rat.png", 5, 5,1,2, 5, 1);
 
                     AddLootItem(rat, 9003, 25);
                     AddLootItem(rat, 9004, 75);
@@ -42,7 +42,7 @@ namespace Engine.Factories
 
                 case 3:
                     Monster giantSpider =
-                        new Monster("巨型蜘蛛", "GiantSpider.png", 10, 10, 10, 3);
+                        new Monster("巨型蜘蛛", "GiantSpider.png", 10, 10,1,4, 10, 3);
 
                     AddLootItem(giantSpider, 9005, 25);
                     AddLootItem(giantSpider, 9006, 75);
@@ -54,11 +54,17 @@ namespace Engine.Factories
             }
         }
 
-        private static void AddLootItem(Monster monster, int itemID, int percentage)
+       /// <summary>
+       /// 添加战利品
+       /// </summary>
+       /// <param name="monster">怪物</param>
+       /// <param name="itemId">物品ID</param>
+       /// <param name="percentage">出现概率</param>
+        private static void AddLootItem(Monster monster, int itemId, int percentage)
         {
             if (RandomNumberGenerator.NumberBetween(1, 100) <= percentage)
             {
-                monster.Inventory.Add(new ItemQuantity(itemID, 1));
+                monster.Inventory.Add(ItemFactory.CreateGameItem(itemId));
             }
         }
     }

@@ -9,7 +9,10 @@ namespace Engine.Factories
 {
     internal static class QuestFactory
     {
-        private static readonly List<Quest> _quests = new List<Quest>();
+        /// <summary>
+        /// 任务集合
+        /// </summary>
+        private static readonly List<Quest> Quests = new List<Quest>();
 
         static QuestFactory()
         {
@@ -21,7 +24,7 @@ namespace Engine.Factories
             rewardItems.Add(new ItemQuantity(1002, 1));
 
             // 创建任务
-            _quests.Add(new Quest(1,
+            Quests.Add(new Quest(1,
                 "清理药草花园",
                 "在草药师的花园里打败蛇",
                 itemsToComplete,
@@ -29,9 +32,14 @@ namespace Engine.Factories
                 rewardItems));
         }
 
-        internal static Quest GetQuestByID(int id)
+        /// <summary>
+        /// 根据ID获取任务
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        internal static Quest GetQuestById(int id)
         {
-            return _quests.FirstOrDefault(quest => quest.ID == id);
+            return Quests.FirstOrDefault(quest => quest.ID == id);
         }
     }
 }

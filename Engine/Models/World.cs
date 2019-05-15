@@ -5,7 +5,7 @@ namespace Engine.Models
    public class World
    {
         //位置信息集合
-       private List<Location> _locations = new List<Location>();
+       private readonly List<Location> _locations = new List<Location>();
 
         /// <summary>
         /// 添加位置信息
@@ -17,7 +17,7 @@ namespace Engine.Models
             loc.YCoordinate = yCoordinate;
             loc.Name = name;
             loc.Description = description;
-            loc.ImageName = imageName;
+            loc.ImageName =$" /Engine;component/Images/Locations/{imageName}";
 
             _locations.Add(loc);
        }

@@ -36,26 +36,42 @@ namespace Engine.Models
         /// 任务
         /// </summary>
         public List<Quest> QuestsAvailableHere { get; set; } = new List<Quest>();
-
+        /// <summary>
+        /// 怪物位置
+        /// </summary>
         public List<MonsterEncounter> MonstersHere { get; set; } =
             new List<MonsterEncounter>();
 
-        public void AddMonster(int monsterID, int chanceOfEncountering)
+        /// <summary>
+        /// 商店位置
+        /// </summary>
+        public Trader TraderHere { get; set; }
+
+        /// <summary>
+        /// 根据怪物ID和出现概率添加怪物
+        /// </summary>
+        /// <param name="monsterId">怪物ID</param>
+        /// <param name="chanceOfEncountering">出现概率</param>
+        public void AddMonster(int monsterId, int chanceOfEncountering)
         {
-            if (MonstersHere.Exists(m => m.MonsterID == monsterID))
+            if (MonstersHere.Exists(m => m.MonsterID == monsterId))
             {
-                // This monster has already been added to this location.
-                // So, overwrite the ChanceOfEncountering with the new number.
-                MonstersHere.First(m => m.MonsterID == monsterID)
+                //这个怪物已经被添加到这个位置。
+                //所以，用这个新数字来表示遇到的可能性。
+                MonstersHere.First(m => m.MonsterID == monsterId)
                     .ChanceOfEncountering = chanceOfEncountering;
             }
             else
             {
-                // This monster is not already at this location, so add it.
-                MonstersHere.Add(new MonsterEncounter(monsterID, chanceOfEncountering));
+                // 这个怪物还没有在这个位置，所以添加它。
+                MonstersHere.Add(new MonsterEncounter(monsterId, chanceOfEncountering));
             }
         }
 
+        /// <summary>
+        /// 获取怪物
+        /// </summary>
+        /// <returns></returns>
         public Monster GetMonster()
         {
             if (!MonstersHere.Any())
@@ -63,18 +79,17 @@ namespace Engine.Models
                 return null;
             }
 
-            // Total the percentages of all monsters at this location.
+            // 计算此位置所有怪物的概率
             int totalChances = MonstersHere.Sum(m => m.ChanceOfEncountering);
 
-            // Select a random number between 1 and the total (in case the total chances is not 100).
+            // 选择一个介于1和总数之间的随机数(以防总数不是100)。
             int randomNumber = RandomNumberGenerator.NumberBetween(1, totalChances);
 
-            // Loop through the monster list, 
-            // adding the monster's percentage chance of appearing to the runningTotal variable.
-            // When the random number is lower than the runningTotal,
-            // that is the monster to return.
+            //运行总数
             int runningTotal = 0;
 
+            //循环遍历怪物列表，将怪物出现的概率百分比添加到runningTotal变量中。
+            //当随机数低于运行总数时，这就是要返回的怪物。
             foreach (MonsterEncounter monsterEncounter in MonstersHere)
             {
                 runningTotal += monsterEncounter.ChanceOfEncountering;
@@ -85,7 +100,7 @@ namespace Engine.Models
                 }
             }
 
-            // If there was a problem, return the last monster in the list.
+            // 如果有问题，返回列表的最后一个怪物
             return MonsterFactory.GetMonster(MonstersHere.Last().MonsterID);
         }
     }

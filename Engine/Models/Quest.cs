@@ -7,6 +7,9 @@ using Engine.Factories;
 
 namespace Engine.Models
 {
+    /// <summary>
+    /// 任务
+    /// </summary>
     public class Quest
     {
         public int ID { get; set; }
