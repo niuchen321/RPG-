@@ -12,26 +12,26 @@ namespace Engine.Models
     /// </summary>
     public class Quest
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int ID { get;}
+        public string Name { get; }
+        public string Description { get;}
 
         /// <summary>
         /// 完成项
         /// </summary>
-        public List<ItemQuantity> ItemsToComplete { get; set; }
+        public List<ItemQuantity> ItemsToComplete { get;}
         /// <summary>
         /// 奖励经验值
         /// </summary>
-        public int RewardExperiencePoints { get; set; }
+        public int RewardExperiencePoints { get; }
         /// <summary>
         /// 奖励金币
         /// </summary>
-        public int RewardGold { get; set; }
+        public int RewardGold { get; }
         /// <summary>
         /// 奖励项
         /// </summary>
-        public List<ItemQuantity> RewardItems { get; set; }
+        public List<ItemQuantity> RewardItems { get; }
 
         public Quest(int id, string name, string description, List<ItemQuantity> itemsToComplete,
             int rewardExperiencePoints, int rewardGold, List<ItemQuantity> rewardItems)

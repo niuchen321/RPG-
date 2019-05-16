@@ -14,15 +14,15 @@ namespace Engine.Models
         /// <summary>
         /// 怪物ID
         /// </summary>
-        public int MonsterID { get; set; }
+        public int MonsterId { get; }
         /// <summary>
         /// 出现概率
         /// </summary>
         public int ChanceOfEncountering { get; set; }
 
-        public MonsterEncounter(int monsterID, int chanceOfEncountering)
+        public MonsterEncounter(int monsterId, int chanceOfEncountering)
         {
-            MonsterID = monsterID;
+            MonsterId = monsterId;
             ChanceOfEncountering = chanceOfEncountering;
         }
     }

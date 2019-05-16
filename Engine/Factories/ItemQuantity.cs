@@ -14,16 +14,16 @@ namespace Engine.Factories
         /// <summary>
         /// 物品ID
         /// </summary>
-        public int ItemID { get; set; }
+        public int ItemId { get; }
 
         /// <summary>
         /// 数量
         /// </summary>
-        public int Quantity { get; set; }
+        public int Quantity { get; }
 
-        public ItemQuantity(int itemID, int quantity)
+        public ItemQuantity(int itemId, int quantity)
         {
-            ItemID = itemID;
+            ItemId = itemId;
             Quantity = quantity;
         }
     }

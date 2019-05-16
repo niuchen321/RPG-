@@ -36,7 +36,7 @@
 
         <DataGrid Grid.Row="2" Grid.Column="0"
                       Margin="10"
-                      ItemsSource="{Binding CurrentPlayer.Inventory}"
+                      ItemsSource="{Binding CurrentPlayer.GroupedInventory}"
                       AutoGenerateColumns="False"
                       HeadersVisibility="Column"
                       CanUserAddRows="False"
@@ -47,17 +47,22 @@
                 <DataGridTextColumn Header="描述"
                                         IsReadOnly="True"
                                         Width="*"
-                                        Binding="{Binding Path=Name}"/>
-                <DataGridTextColumn Header="价格"
+                                        Binding="{Binding Item.Name}"/>
+
+                <DataGridTextColumn Header="数量"
+                                    IsReadOnly="True"
+                                    Width="Auto"
+                                    Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Header="单价"
                                         IsReadOnly="True"
                                         Width="Auto"
-                                        Binding="{Binding Path=Price}"/>
+                                        Binding="{Binding Item.Price}"/>
                 <DataGridTemplateColumn MinWidth="75">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="OnClick_Sell"
                                         Width="55"
-                                        Content="出售"/>
+                                        Content="出售1"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -67,7 +72,7 @@
 
         <DataGrid Grid.Row="2" Grid.Column="1"
                       Margin="10"
-                      ItemsSource="{Binding CurrentTrader.Inventory}"
+                      ItemsSource="{Binding CurrentTrader.GroupedInventory}"
                       AutoGenerateColumns="False"
                       HeadersVisibility="Column"
                       CanUserAddRows="False"
@@ -78,17 +83,22 @@
                 <DataGridTextColumn Header="描述"
                                         IsReadOnly="True"
                                         Width="*"
-                                        Binding="{Binding Path=Name}"/>
-                <DataGridTextColumn Header="价格"
+                                        Binding="{Binding Item.Name}"/>
+
+                <DataGridTextColumn Header="数量"
+                                    IsReadOnly="True"
+                                    Width="Auto"
+                                    Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Header="单价"
                                         IsReadOnly="True"
                                         Width="Auto"
-                                        Binding="{Binding Path=Price}"/>
+                                        Binding="{Binding Item.Price}"/>
                 <DataGridTemplateColumn MinWidth="75">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="OnClick_Buy"
                                         Width="55"
-                                        Content="购买"/>
+                                        Content="购买1"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -10,17 +10,13 @@ namespace Engine.Models
         /// <summary>
         /// 添加位置信息
         /// </summary>
-       internal void AddLocation(int xCoordinate, int yCoordinate, string name, string description, string imageName)
-        {
-            Location loc = new Location();
-            loc.XCoordinate = xCoordinate;
-            loc.YCoordinate = yCoordinate;
-            loc.Name = name;
-            loc.Description = description;
-            loc.ImageName =$" /Engine;component/Images/Locations/{imageName}";
-
-            _locations.Add(loc);
+       internal void AddLocation(int xCoordinate, int yCoordinate,
+           string name, string description, string imageName)
+       {
+           _locations.Add(new Location(xCoordinate, yCoordinate, name, description,
+               $"/Engine;component/Images/Locations/{imageName}"));
        }
+
 
         /// <summary>
         /// 根据坐标获取位置
@@ -28,7 +24,7 @@ namespace Engine.Models
         /// <param name="x">x坐标</param>
         /// <param name="y">y坐标</param>
         /// <returns>位置信息</returns>
-       public Location LocationAt(int x, int y)
+        public Location LocationAt(int x, int y)
        {
            foreach (var location in _locations)
            {

@@ -16,8 +16,7 @@ namespace Engine.Models
     {
         private string _characterClass;
         private int _experiencePoints;
-        private int _level;
-        
+
         /// <summary>
         /// 角色类型
         /// </summary>
@@ -27,7 +26,7 @@ namespace Engine.Models
             set
             {
                 _characterClass = value;
-                OnPropertyChanged(nameof(CharacterClass));
+                OnPropertyChanged();
             }
         }
 
@@ -37,38 +36,37 @@ namespace Engine.Models
         public int ExperiencePoints
         {
             get => _experiencePoints;
-            set
+           private set
             {
                 _experiencePoints = value;
-                OnPropertyChanged(nameof(ExperiencePoints));
-            }
-        }
-        /// <summary>
-        /// 等级
-        /// </summary>
-        public int Level
-        {
-            get => _level; set
-            {
-                _level = value;
-                OnPropertyChanged(nameof(Level));
+                OnPropertyChanged();
+                SetLevelAndMaximumHitPoints();
             }
         }
         
         /// <summary>
         /// 任务状态集合
         /// </summary>
-        public ObservableCollection<QuestStatus> Quests { get; set; }
+        public ObservableCollection<QuestStatus> Quests { get;}
+
+        /// <summary>
+        /// 用户升级事件
+        /// </summary>
+        public event EventHandler OnLeveledUp;
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        public Player()
+        public Player(string name, string characterClass, int experiencePoints,
+            int maximumHitPoints, int currentHitPoints, int gold) :
+            base(name, maximumHitPoints, currentHitPoints, gold)
         {
-            Inventory = new ObservableCollection<GameItem>();
+            CharacterClass = characterClass;
+            ExperiencePoints = experiencePoints;
+
             Quests = new ObservableCollection<QuestStatus>();
         }
-        
+
         /// <summary>
         /// 判断是否存在足够的物品
         /// </summary>
@@ -78,13 +76,41 @@ namespace Engine.Models
         {
             foreach (ItemQuantity item in items)
             {
-                if (Inventory.Count(i => i.ItemTypeId == item.ItemID) < item.Quantity)
+                if (Inventory.Count(i => i.ItemTypeId == item.ItemId) < item.Quantity)
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 增加经验值
+        /// </summary>
+        /// <param name="experiencePoints"></param>
+        public void AddExperience(int experiencePoints)
+        {
+            ExperiencePoints += experiencePoints;
+        }
+
+        /// <summary>
+        /// 获取等级和最大生命值
+        /// </summary>
+        private void SetLevelAndMaximumHitPoints()
+        {
+            int originalLevel = Level;
+
+            Level = (ExperiencePoints / 10) + 1;
+
+            if (Level != originalLevel)
+            {
+                MaximumHitPoints = Level * 10;
+
+                CompletelyHeal();
+
+                OnLeveledUp?.Invoke(this, System.EventArgs.Empty);
+            }
         }
     }
 }

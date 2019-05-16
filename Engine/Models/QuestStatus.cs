@@ -9,8 +9,10 @@ namespace Engine.Models
     /// <summary>
     /// 任务状态
     /// </summary>
-   public class QuestStatus
+   public class QuestStatus:BaseNotificationClass
     {
+        private bool _isCompleted;
+
         /// <summary>
         /// 进行任务
         /// </summary>
@@ -18,7 +20,15 @@ namespace Engine.Models
         /// <summary>
         /// 是否完成
         /// </summary>
-        public bool IsCompleted { get; set; }
+        public bool IsCompleted
+        {
+            get => _isCompleted;
+            set
+            {
+                _isCompleted = value;
+                OnPropertyChanged();
+            }
+        }
 
         public QuestStatus(Quest quest)
         {

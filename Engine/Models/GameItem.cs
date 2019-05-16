@@ -14,27 +14,36 @@ namespace Engine.Models
         /// <summary>
         /// ID
         /// </summary>
-        public int ItemTypeId { get; set; }
+        public int ItemTypeId { get; }
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get;  }
         /// <summary>
         /// 价格
         /// </summary>
-        public int Price { get; set; }
+        public int Price { get;  }
 
-        public GameItem(int itemTypeId, string name, int price)
+        /// <summary>
+        /// 是否唯一
+        /// </summary>
+        public bool IsUnique { get;}
+
+        public GameItem(int itemTypeId, string name, int price, bool isUnique = false)
         {
             ItemTypeId = itemTypeId;
             Name = name;
             Price = price;
+            IsUnique = isUnique;
         }
 
-
+        /// <summary>
+        /// 克隆
+        /// </summary>
+        /// <returns></returns>
         public GameItem Clone()
         {
-            return new GameItem(ItemTypeId, Name, Price);
+            return new GameItem(ItemTypeId, Name, Price,IsUnique);
         }
     }
 }

@@ -14,14 +14,14 @@ namespace Engine.Models
         /// <summary>
         /// 最小伤害
         /// </summary>
-        public int MinimumDamage { get; set; }
+        public int MinimumDamage { get; }
         /// <summary>
         /// 最大伤害
         /// </summary>
-        public int MaximumDamage { get; set; }
+        public int MaximumDamage { get;}
 
         public Weapon(int itemTypeId, string name, int price, int minDamage, int maxDamage)
-            : base(itemTypeId, name, price)
+            : base(itemTypeId, name, price,true)
         {
             MinimumDamage = minDamage;
             MaximumDamage = maxDamage;

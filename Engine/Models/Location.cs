@@ -15,37 +15,46 @@ namespace Engine.Models
         /// <summary>
         /// X坐标
         /// </summary>
-        public int XCoordinate { get; set; }
+        public int XCoordinate { get; }
         /// <summary>
         /// Y坐标
         /// </summary>
-        public int YCoordinate { get; set; }
+        public int YCoordinate { get;}
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get;}
         /// <summary>
         /// 说明
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get;}
         /// <summary>
         /// 图片名称
         /// </summary>
-        public string ImageName { get; set; }
+        public string ImageName { get;}
         /// <summary>
         /// 任务
         /// </summary>
-        public List<Quest> QuestsAvailableHere { get; set; } = new List<Quest>();
+        public List<Quest> QuestsAvailableHere { get; } = new List<Quest>();
         /// <summary>
         /// 怪物位置
         /// </summary>
-        public List<MonsterEncounter> MonstersHere { get; set; } =
+        public List<MonsterEncounter> MonstersHere { get; } =
             new List<MonsterEncounter>();
 
         /// <summary>
         /// 商店位置
         /// </summary>
         public Trader TraderHere { get; set; }
+
+        public Location(int xCoordinate, int yCoordinate, string name, string description, string imageName)
+        {
+            XCoordinate = xCoordinate;
+            YCoordinate = yCoordinate;
+            Name = name;
+            Description = description;
+            ImageName = imageName;
+        }
 
         /// <summary>
         /// 根据怪物ID和出现概率添加怪物
@@ -54,11 +63,11 @@ namespace Engine.Models
         /// <param name="chanceOfEncountering">出现概率</param>
         public void AddMonster(int monsterId, int chanceOfEncountering)
         {
-            if (MonstersHere.Exists(m => m.MonsterID == monsterId))
+            if (MonstersHere.Exists(m => m.MonsterId == monsterId))
             {
                 //这个怪物已经被添加到这个位置。
                 //所以，用这个新数字来表示遇到的可能性。
-                MonstersHere.First(m => m.MonsterID == monsterId)
+                MonstersHere.First(m => m.MonsterId == monsterId)
                     .ChanceOfEncountering = chanceOfEncountering;
             }
             else
@@ -96,12 +105,12 @@ namespace Engine.Models
 
                 if (randomNumber <= runningTotal)
                 {
-                    return MonsterFactory.GetMonster(monsterEncounter.MonsterID);
+                    return MonsterFactory.GetMonster(monsterEncounter.MonsterId);
                 }
             }
 
             // 如果有问题，返回列表的最后一个怪物
-            return MonsterFactory.GetMonster(MonstersHere.Last().MonsterID);
+            return MonsterFactory.GetMonster(MonstersHere.Last().MonsterId);
         }
     }
 }

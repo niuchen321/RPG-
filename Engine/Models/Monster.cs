@@ -16,36 +16,33 @@ namespace Engine.Models
         /// <summary>
         /// 图片名称
         /// </summary>
-        public string ImageName { get; set; }
+        public string ImageName { get; }
 
         /// <summary>
         /// 最小伤害
         /// </summary>
-        public int MinimumDamage { get; set; }
+        public int MinimumDamage { get; }
         /// <summary>
         /// 最大伤害
         /// </summary>
-        public int MaximumDamage { get; set; }
+        public int MaximumDamage { get; }
 
 
         /// <summary>
         /// 奖励经验值
         /// </summary>
-        public int RewardExperiencePoints { get; private set; }
+        public int RewardExperiencePoints { get;}
 
         public Monster(string name, string imageName,
-            int maximumHitPoints, int hitPoints,
+            int maximumHitPoints, int currentHitPoints,
             int minimumDamage, int maxmumDamage,
-            int rewardExperiencePoints, int rewardGold)
+            int rewardExperiencePoints, int gold) :
+            base(name, maximumHitPoints, currentHitPoints, gold)
         {
-            Name = name;
             ImageName = $"/Engine;component/Images/Monsters/{imageName}";
-            MaximumHitPoints = maximumHitPoints;
-            CurrentHitPoints = hitPoints;
-            RewardExperiencePoints = rewardExperiencePoints;
-            Gold = rewardGold;
             MinimumDamage = minimumDamage;
             MaximumDamage = maxmumDamage;
+            RewardExperiencePoints = rewardExperiencePoints;
         }
     }
 }
